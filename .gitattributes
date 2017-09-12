@@ -1,0 +1,13 @@
+# Source files
+# ============
+*.py      text
+*.py3     text
+*.pxd     text
+*.pyw     text
+*.pyx     text
+
+# Binary files
+# ============
+*.pyc   binary
+*.pyd   binary
+*.pyo   binary
