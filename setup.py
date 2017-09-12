@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 """
 RFID
 https://github.com/andrewvaughan/rfid
@@ -17,26 +19,82 @@ See the License for the specific language governing permissions and
 limitations under the License.
 """
 
+import distutils.cmd
+import distutils.log
+import os
+import setuptools
+import subprocess
 
 from setuptools import setup
+
+
+class LintCommand(distutils.cmd.Command):
+    """
+    A custom command to run linting on all Python source files.
+    """
+
+    description = 'run linting on Python source files'
+    user_options = [
+        ('verbose', None, 'show PEP8 and source code upon failure (default: off)'),
+        ('quiet', None, 'return only error count and an error code (default: off)'),
+        ('max-length=', None, 'limit the maximum length of output (default: 118)')
+    ]
+
+    def initialize_options(self):
+        """
+        Sets up defaults for the command options.
+        """
+
+        self.verbose = False
+        self.quiet = False
+        self.max_length = 118
+
+    def finalize_options(self):
+        """
+        Parses command options prior to running.
+        """
+
+        assert self.max_length > 0, 'Maximum length must be greater than 0.'
+
+    def run(self):
+        """
+        Run the command.
+        """
+
+        command = ['/usr/bin/env', 'pycodestyle']
+
+        if self.verbose:
+            command.append('--show-pep8')
+            command.append('--show-source')
+
+        if self.quiet:
+            command.append('--count')
+
+        if self.max_length:
+            command.append('--max-line-length=%d' % self.max_length)
+
+        command.append("%s/setup.py" % os.getcwd())
+
+        self.announce(
+            'Running command: %s' % str(command),
+            level=distutils.log.INFO
+        )
+
+        subprocess.check_call(command)
 
 
 def readme():
     """
     Attempts to convert the README file to rst format and return it.
     """
-    try:
-        import pypandoc
-        return pypandoc.convert('README.md', 'rst').decode('utf-8')
-    except (ImportError, OSError):
-        return open('README.md', 'rb').read().decode('utf-8')
 
+    # try:
+    #     import pypandoc
+    #     return pypandoc.convert('README.md', 'rst').decode('utf-8')
+    # except (ImportError, OSError):
+    #     return open('README.md', 'rb').read().decode('utf-8')
 
-def license():
-    """
-    Returns text from the LICENSE file.
-    """
-    return open('LICENSE', 'rb').read().decode('utf-8')
+    return ""
 
 
 setup(
@@ -68,5 +126,8 @@ setup(
     author_email='hello@andrewvaughan.io',
     license='ASL',
     packages=['rfid'],
-    install_requires=[]
+    install_requires=[],
+    cmdclass={
+        'lint': LintCommand
+    }
 )
