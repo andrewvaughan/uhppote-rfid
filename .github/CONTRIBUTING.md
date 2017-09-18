@@ -1,7 +1,7 @@
 # Contributing
 
-The RFID Python module would not exist without its contributors, and we welcome you to join us in our endeavor.  This
-guide is intended for anyone who wants to contribute to [The RFID Python module][project-url]. Please read this
+The UHPPOTE RFID module Python module would not exist without its contributors, and we welcome you to join us in our endeavor.  This
+guide is intended for anyone who wants to contribute to [The UHPPOTE RFID module Python module][project-url]. Please read this
 document carefully before contributing, as it answers many of the questions that new contributors have when first
 working with our projects.
 
@@ -77,7 +77,7 @@ the main repository are meant for production purposes only.
 In order to keep your code up to date with master, you need to add the project's main repository as your upstream:
 
 ```bash
-git remote add upstream https://github.com/andrewvaughan/rfid
+git remote add upstream https://github.com/andrewvaughan/uhppote-rfid module
 ```
 
 **5. Ensure that your master branch is up to date with the upstream**
@@ -177,11 +177,11 @@ such, you may be requested to pull an updated set of code style guidelines due t
 submitted code, and to resubmit your request according to the new guidelines.
 
 
-[project-url]:    https://github.com/andrewvaughan/rfid
-[license-url]:    https://github.com/andrewvaughan/rfid/blob/master/LICENSE
-[issues-url]:     https://github.com/andrewvaughan/rfid/issues
-[milestones-url]: https://github.com/andrewvaughan/rfid/milestones
-[pulls-url]:      https://github.com/andrewvaughan/rfid/pulls
+[project-url]:    https://github.com/andrewvaughan/uhppote-rfid module
+[license-url]:    https://github.com/andrewvaughan/uhppote-rfid module/blob/master/LICENSE
+[issues-url]:     https://github.com/andrewvaughan/uhppote-rfid module/issues
+[milestones-url]: https://github.com/andrewvaughan/uhppote-rfid module/milestones
+[pulls-url]:      https://github.com/andrewvaughan/uhppote-rfid module/pulls
 
 [squash-support]: http://gitready.com/advanced/2009/02/10/squashing-commits-with-rebase.html
 [pull-support]:   https://help.github.com/articles/creating-a-pull-request

@@ -1,8 +1,7 @@
 #!/usr/bin/env python
-
 """
 RFID
-https://github.com/andrewvaughan/rfid
+https://github.com/andrewvaughan/uhppote-rfid
 
 Copyright 2017 Andrew Vaughan
 
@@ -36,8 +35,7 @@ class LintCommand(distutils.cmd.Command):
     description = 'run linting on Python source files'
     user_options = [
         ('verbose', None, 'show PEP8 and source code upon failure (default: off)'),
-        ('quiet', None, 'return only error count and an error code (default: off)'),
-        ('max-length=', None, 'limit the maximum length of output (default: 118)')
+        ('quiet', None, 'return only error count and an error code (default: off)')
     ]
 
     def initialize_options(self):
@@ -47,14 +45,13 @@ class LintCommand(distutils.cmd.Command):
 
         self.verbose = False
         self.quiet = False
-        self.max_length = 118
 
     def finalize_options(self):
         """
         Parses command options prior to running.
         """
+        pass
 
-        assert self.max_length > 0, 'Maximum length must be greater than 0.'
 
     def run(self):
         """
@@ -70,10 +67,7 @@ class LintCommand(distutils.cmd.Command):
         if self.quiet:
             command.append('--count')
 
-        if self.max_length:
-            command.append('--max-line-length=%d' % self.max_length)
-
-        command.append("%s/setup.py" % os.getcwd())
+        command.append("%s/" % os.getcwd())
 
         self.announce(
             'Running command: %s' % str(command),
@@ -98,9 +92,9 @@ def readme():
 
 
 setup(
-    name='rfid',
-    version='0.1',
-    description='Interface for TK RFID control systems.',
+    name='UHPPOTE_RFID',
+    version='0.1.0',
+    description='Interface for UHPPOTE RFID control systems.',
     long_description=readme(),
     classifiers=[
         'Development Status :: 3 - Alpha',
@@ -121,11 +115,11 @@ setup(
         'Topic :: Utilities',
     ],
     keywords='rfid access security',
-    url='http://github.com/andrewvaughan/rfid',
+    url='http://github.com/andrewvaughan/uhppote-rfid',
     author='Andrew Vaughan',
     author_email='hello@andrewvaughan.io',
     license='ASL',
-    packages=['rfid'],
+    packages=['uhppote_rfid'],
     install_requires=[],
     cmdclass={
         'lint': LintCommand

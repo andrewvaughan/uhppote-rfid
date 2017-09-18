@@ -11,10 +11,10 @@ If you wish to contribute to the project, we recommend reading the [contribution
 Developer documentation is provided via [Sphinx][sphinx].  Information on how to generate this documentation will be
 provided at a later time.
 
-[readme]:             https://github.com/andrewvaughan/rfid/blob/master/README.md
-[contributing]:       https://github.com/andrewvaughan/rfid/blob/master/.github/CONTRIBUTING.md
-[contributing-issue]: https://github.com/andrewvaughan/rfid/blob/master/.github/CONTRIBUTING.md#ways-to-contribute
+[readme]:             https://github.com/andrewvaughan/uhppote-rfid/blob/master/README.md
+[contributing]:       https://github.com/andrewvaughan/uhppote-rfid/blob/master/.github/CONTRIBUTING.md
+[contributing-issue]: https://github.com/andrewvaughan/uhppote-rfid/blob/master/.github/CONTRIBUTING.md#ways-to-contribute
 
-[issues]:             https://github.com/andrewvaughan/rfid/issues
+[issues]:             https://github.com/andrewvaughan/uhppote-rfid/issues
 
 [sphinx]:             http://www.sphinx-doc.org/
