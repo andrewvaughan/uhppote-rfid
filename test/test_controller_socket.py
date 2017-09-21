@@ -253,6 +253,8 @@ class TestControllerSocket(unittest.TestCase):
 
         with mock.patch('uhppote_rfid.controller_socket.socket') as mock_socket:
             mockSocket = ControllerSocket('127.0.0.1')
+            mockSocket.socket.send.return_value = len(data)
+
             mockSocket.connect()
             mockSocket.send(data)
             mockSocket.socket.send.assert_called_with(data)
@@ -263,6 +265,8 @@ class TestControllerSocket(unittest.TestCase):
 
         with mock.patch('uhppote_rfid.controller_socket.socket') as mock_socket:
             mockSocket = ControllerSocket('127.0.0.1')
+            mockSocket.socket.send.return_value = len(data)
+
             mockSocket.connect()
             mockSocket.send(data)
             mockSocket.socket.send.assert_called_with(data)
@@ -272,6 +276,8 @@ class TestControllerSocket(unittest.TestCase):
 
         with mock.patch('uhppote_rfid.controller_socket.socket') as mock_socket:
             mockSocket = ControllerSocket('127.0.0.1')
+            mockSocket.socket.send.return_value = len(data)
+
             mockSocket.connect()
             mockSocket.send(data)
             mockSocket.socket.send.assert_called_with(data)
