@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-.. class:: SerialNumber
+.. module:: SerialNumber
    :synopsis: Provides serial number support for UHPPOTE RFID control boards.
-
    :copyright: (c) 2017 by Andrew Vaughan.
    :license: Apache 2.0, see LICENSE for more details.
 """
@@ -14,7 +13,8 @@ import string
 
 class SerialNumber(object):
     """
-    Manages serial numbers for UHPPOTE RFID systems.
+    .. class:: SerialNumber
+       Manages serial numbers for UHPPOTE RFID systems.
 
     .. versionadded:: 0.1.0
     """
@@ -49,12 +49,9 @@ class SerialNumber(object):
            :param serial: the serial number as either a string, integer, or bytearray
            :type serial: str or int or bytearray
 
-           :raises: SerialNumberException if the provided serial number is in the incorrect format
+           :raises SerialNumberException: if the provided serial number is in the incorrect format
         """
-
-        # @TODO - add raises to comments above
-
-        self.logger = logging.getLogger("SerialNumber")
+        self.logger = logging.getLogger("UHPPOTE.SerialNumber")
 
         # If this is a bytearray, convert it to a 9-digit integer for transformation later
         if isinstance(serial, bytearray):
@@ -137,7 +134,7 @@ class SerialNumber(object):
 
     def getIntegerString(self):
         """
-        .. versionadded: 0.1.0
+        .. versionadded:: 0.1.0
         .. SerialNumber:function:: getIntegerString()
 
            Returns the serial number as a 9-digit string representation.

@@ -4,11 +4,21 @@ dependencies:
 lint: dependencies
 	python setup.py lint
 
-test: dependencies lint
+test: clean-pyc lint
 	python -m unittest discover
 
-coverage: dependencies lint
+coverage: clean-pyc lint
 	coverage run --source uhppote_rfid test
 	coverage html
 
-.PHONY : dependencies lint test coverage
+clean-pyc:
+	find . -name '*.pyc' -exec rm -f {} +
+	find . -name '*.pyo' -exec rm -f {} +
+	find . -name '*~' -exec rm -f  {} +
+
+clean: clean-pyc
+	rm -rf build/
+	rm -rf dist/
+	rm -rf *.egg-info
+
+.PHONY : dependencies lint test coverage clean-pyc clean

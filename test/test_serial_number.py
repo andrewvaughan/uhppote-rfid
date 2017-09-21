@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+
 import unittest
 
 from uhppote_rfid import SerialNumber, SerialNumberException
@@ -9,7 +11,7 @@ class TestSerialNumber(unittest.TestCase):
     """
 
 
-    # SerialNumber.__init__()
+    # SerialNumber.__init__
 
     def test_constructor_Integer_NegativeException(self):
         with self.assertRaises(SerialNumberException):
@@ -113,7 +115,7 @@ class TestSerialNumber(unittest.TestCase):
             SerialNumber(frozenset("test"))
 
 
-    # SerialNumber.getInteger()
+    # SerialNumber.getInteger
 
     def test_getInteger_NormalValue_IsEqual(self):
         self.assertEqual(SerialNumber(112233445).getInteger(), 112233445)
@@ -140,8 +142,7 @@ class TestSerialNumber(unittest.TestCase):
         self.assertEqual(SerialNumber(bytearray([0x3b, 0x9a, 0xc9, 0xff])).getInteger(), 999999999)
 
 
-    # SerialNumber.getIntegerString()
-
+    # SerialNumber.getIntegerString
 
     def test_getIntegerString_NormalValue_IsEqual(self):
         self.assertEqual(SerialNumber(112233445).getIntegerString(), "112233445")
@@ -192,8 +193,7 @@ class TestSerialNumber(unittest.TestCase):
         self.assertEqual(SerialNumber(bytearray([0x0, 0x0, 0x0, 0x10])).getIntegerString(), "000000016")
 
 
-    # SerialNumber.getHexadecimal()
-
+    # SerialNumber.getHexadecimal
 
     def test_getHexadecimal_NormalValue_IsEqual(self):
         self.assertEqual(SerialNumber(112233445).getHexadecimal(), "0x6b08be5")
@@ -244,8 +244,7 @@ class TestSerialNumber(unittest.TestCase):
         self.assertEqual(SerialNumber(bytearray([0x0, 0x0, 0x0, 0x10])).getHexadecimal(), "0x10")
 
 
-    # SerialNumber.getHexadecimalString()
-
+    # SerialNumber.getHexadecimalString
 
     def test_getHexadecimalString_NormalValue_IsEqual(self):
         self.assertEqual(SerialNumber(112233445).getHexadecimalString(), "06b08be5")
@@ -344,8 +343,7 @@ class TestSerialNumber(unittest.TestCase):
         self.assertEqual(SerialNumber(bytearray([0x0, 0x0, 0x0, 0x10])).getHexadecimalString(True), "10000000")
 
 
-    # SerialNumber.getByteArray()
-
+    # SerialNumber.getByteArray
 
     def test_getByteArray_NormalValue_IsEqual(self):
         self.assertEqual(SerialNumber(112233445).getByteArray(), bytearray([0x6, 0xb0, 0x8b, 0xe5]))
@@ -445,7 +443,6 @@ class TestSerialNumber(unittest.TestCase):
 
 
     # SerialNumber.__str__
-
 
     def test_String_NormalValue_IsEqual(self):
         self.assertEqual(str(SerialNumber(112233445)), "06b08be5")
