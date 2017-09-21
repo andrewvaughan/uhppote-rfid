@@ -1,15 +1,15 @@
 language: python
-sudo: required
-group: deprecated-2017Q3
+sudo: false
 python:
-  - "2.7"
+    - "2.7"
 
-#cache:
-#  directories:
-#    - $HOME/.cache/pip
+cache:
+    directories:
+        - $HOME/.cache/pip
 
 install:
-  - travis_retry pip install -q -r requirements.txt
+    - travis_retry pip install -q -r requirements.txt
 
 script:
-  - coverage run --source uhppote_rfid test
+    - python setup.py lint
+    - python -m unittest discover -v
