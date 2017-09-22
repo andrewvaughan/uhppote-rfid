@@ -10,7 +10,6 @@ class TestSerialNumber(unittest.TestCase):
     Tests the SerialNumber class and related classes.
     """
 
-
     # SerialNumber.__init__
 
     def test_constructor_Integer_NegativeException(self):

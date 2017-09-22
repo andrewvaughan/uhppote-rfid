@@ -1,9 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-.. module:: SerialNumber
-   :synopsis: Provides serial number support for UHPPOTE RFID control boards.
+Provides serial number support for UHPPOTE RFID control boards.
+
    :copyright: (c) 2017 by Andrew Vaughan.
    :license: Apache 2.0, see LICENSE for more details.
+
+.. module:: SerialNumber
 """
 
 import binascii
@@ -13,43 +15,42 @@ import string
 
 class SerialNumber(object):
     """
-    .. class:: SerialNumber
-       Manages serial numbers for UHPPOTE RFID systems.
+    Manages serial numbers for UHPPOTE RFID systems.
 
+    .. class:: SerialNumber
     .. versionadded:: 0.1.0
     """
 
     def __init__(self, serial):
         """
-        .. versionadded:: 0.1.0
-        .. function:: __init__(serial)
+        Initialize a new SerialNumber.  Serial numbers can be provided in one of several formats.
 
-           Initializes a new SerialNumber.  Serial numbers can be provided in one of several formats.
+        Serial Number Formats
+        ---------------------
 
-           Serial Number Formats
-           ---------------------
+        9-Digit `int` or `str`
+        ++++++++++++++++++++++
+        If a 9-digit `int` or `str` (e.g., "9b87a8") is provided, it will be treated as the 9-digit value from the
+        sticker on the physical controller board.
 
-           9-Digit `int` or `str`
-           ++++++++++++++++++++++
-           If a 9-digit `int` or `str` (e.g., "9b87a8") is provided, it will be treated as the 9-digit value from the
-           sticker on the physical controller board.
+        Hexadecimal
+        +++++++++++
+        If a hexadecimal value (e.g., "0x9b87a8") or an 8-character string of hexadecimal numbers is provided, it will
+        be treated as the final four pairs of hexadecimal numbers from the MAC address of the controller board.  The
+        MAC address of the controller board can be found by running a Search function on the controller board.
 
-           Hexadecimal
-           +++++++++++
-           If a hexadecimal value (e.g., "0x9b87a8") or an 8-character string of hexadecimal numbers is provided, it
-           will be treated as the final four pairs of hexadecimal numbers from the MAC address of the controller
-           board.  The MAC address of the controller board can be found by running a Search function on the controller
-           board.
-
-           4-Byte `bytearray`
-           ++++++++++++++++++
-           If a 4-byte `bytearray` is provided, it will be treated as the final four pairs of hexadecimal numbers from
-           the MAC address of the controller board, in order.
+        4-Byte `bytearray`
+        ++++++++++++++++++
+        If a 4-byte `bytearray` is provided, it will be treated as the final four pairs of hexadecimal numbers from
+        the MAC address of the controller board, in order.
 
            :param serial: the serial number as either a string, integer, or bytearray
            :type serial: str or int or bytearray
 
-           :raises SerialNumberException: if the provided serial number is in the incorrect format
+           :raisess SerialNumberException: if the provided serial number is in the incorrect format
+
+        .. versionadded:: 0.1.0
+        .. function:: __init__(serial)
         """
         self.logger = logging.getLogger("UHPPOTE.SerialNumber")
 
@@ -107,50 +108,48 @@ class SerialNumber(object):
 
     def __str__(self):
         """
-        .. versionadded:: 0.1.0
-        .. SerialNumber:function:: __str__()
-
-           Returns a string representation of the SerialNumber.
+        Return a string representation of the SerialNumber.
 
            :returns: the serial number as a string
            :rtype: str
+
+        .. versionadded:: 0.1.0
+        .. SerialNumber:function:: __str__()
         """
         return self.getHexadecimalString()
 
 
     def getInteger(self):
         """
-        .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getInteger()
+        Return the serial number as an integer.
 
-           Returns the serial number as an integer.  It may not be 9-digits if pre-padded by 0s.  Use a string
-           representation if 9-digits are required.
+        It may not be 9-digits if pre-padded by 0s.  Use a string representation if 9-digits are required.
 
            :returns: the serial number as an integer
            :rtype: int
+
+        .. versionadded:: 0.1.0
+        .. SerialNumber:function:: getInteger()
         """
         return self.serialInteger
 
 
     def getIntegerString(self):
         """
-        .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getIntegerString()
-
-           Returns the serial number as a 9-digit string representation.
+        Return the serial number as a 9-digit string representation.
 
            :returns: the serial number as a 9-digit string
            :rtype: str
+
+        .. versionadded:: 0.1.0
+        .. SerialNumber:function:: getIntegerString()
         """
         return str(self.getInteger()).zfill(9)
 
 
     def getHexadecimal(self):
         """
-        .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getHexadecimal()
-
-           Returns the serial number as a hexadecimal.
+        Return the serial number as a hexadecimal.
 
            .. note::
               The hexadecimal value provided may not be exactly 8-digits and should not be used for direct communication
@@ -158,23 +157,28 @@ class SerialNumber(object):
 
            :returns: the serial number as a hexadecimal string
            :rtype: str
+
+        .. versionadded:: 0.1.0
+        .. SerialNumber:function:: getHexadecimal()
         """
         return hex(self.getInteger())
 
 
     def getHexadecimalString(self, reverse=False):
         """
-        .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getHexadecimalString([reverse = False])
+        Return the serial number as a 8-character string of hexadecimal digits.
 
-           Returns the serial number as a 8-character string of hexadecimal digits.  Certain functions for the control
-           board require the hexadecimal pairs to be reversed, so a `reverse` parameter is provided.
+        Certain functions for the control board require the hexadecimal pairs to be reversed, so a `reverse` parameter
+        is provided.
 
            :param reverse: whether to return the number as reversed bytes (default False)
            :type reverse: bool
 
            :returns: the serial number as a hexadecimal string without the "0x" prefix
            :rtype: str
+
+        .. versionadded:: 0.1.0
+        .. SerialNumber:function:: getHexadecimalString([reverse = False])
         """
         if not reverse:
             return "{:08x}".format(self.getInteger())
@@ -185,17 +189,19 @@ class SerialNumber(object):
 
     def getByteArray(self, reverse=False):
         """
-        .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getByteArray([reverse = False])
+        Return the serial number as a 4-length byte array of hexadecimal values.
 
-           Returns the serial number as a 4-length byte array of hexadecimal values.  Certain functions for the
-           control board require the hexadecimal pairs to be reversed, so a `reverse` parameter is provided.
+        Certain functions for the control board require the hexadecimal pairs to be reversed, so a `reverse` parameter
+        is provided.
 
            :param reverse: whether to return the serial number as reversed bytes
            :type reverse: bool
 
            :returns: the serial number as a 4-length array of bytes
            :rtype: bytearray
+
+        .. versionadded:: 0.1.0
+        .. SerialNumber:function:: getByteArray([reverse = False])
         """
         return bytearray.fromhex(self.getHexadecimalString(reverse))
 
@@ -208,4 +214,5 @@ class SerialNumberException(Exception):
 
     .. versionadded:: 0.1.0
     """
+
     pass
