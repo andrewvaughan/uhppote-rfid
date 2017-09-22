@@ -24,4 +24,4 @@ clean: clean-pyc
 	rm -rf dist/
 	rm -rf *.egg-info
 
-.PHONY : dependencies lint test coverage clean-pyc clean
+.PHONY : dependencies lint-docstring lint test coverage clean-pyc clean

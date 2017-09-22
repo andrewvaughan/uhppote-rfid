@@ -7,6 +7,7 @@ Module for interfacing with UHPPOTE RFID control boards.
 
 from .serial_number import SerialNumber, SerialNumberException
 from .controller_socket import ControllerSocket, SocketConnectionException, SocketTransmitException
+from .controller import Controller, ControllerFunction, ControllerStatus, InvalidResponseException
 
 __all__ = [
     'SerialNumber',
@@ -14,4 +15,8 @@ __all__ = [
     'ControllerSocket',
     'SocketConnectionException',
     'SocketTransmitException',
+    'Controller',
+    'ControllerFunction',
+    'ControllerStatus',
+    'InvalidResponseException',
 ]

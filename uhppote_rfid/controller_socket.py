@@ -8,6 +8,7 @@ Provides socket and communication support for UHPPOTE RFID control boards.
 .. module:: ControllerSocket
 """
 
+import binascii
 import logging
 import re
 import socket
@@ -33,7 +34,7 @@ class ControllerSocket(object):
            :raises ValueError: if provided an invalid host or port
 
         .. versionadded:: 0.1.0
-        .. function:: __init__(host, port)
+        .. function:: __init__(host[, port])
         """
         self.logger = logging.getLogger("UHPPOTE.ControllerSocket")
 
@@ -59,7 +60,7 @@ class ControllerSocket(object):
            :raises SocketConnectionException: if unable to connect after the prescribed number of retries
 
         .. versionadded:: 0.1.0
-        .. function:: connect()
+        .. function:: connect([attempts])
         """
         self.logger.debug("Connecting to %s:%d via socket" % (self.host, self.port))
 
@@ -97,7 +98,6 @@ class ControllerSocket(object):
         self.connected = False
 
 
-
     def send(self, msg):
         """
         Send a message through a connected socket.
@@ -124,7 +124,7 @@ class ControllerSocket(object):
             raise SocketConnectionException("Socket not connected. Cannot send.")
 
         self.logger.debug("Attempting to send message through socket of length %d." % messageLength)
-        self.logger.log(1, str(msg))
+        self.logger.log(1, binascii.hexlify(msg))
 
         byteCount = 0
         while byteCount < messageLength:
@@ -154,7 +154,7 @@ class ControllerSocket(object):
            :raises SocketTransmitException: if the socket connection is broken during transmission
 
         .. versionadded:: 0.1.0
-        .. function:: receive()
+        .. function:: receive([size])
         """
         self.logger.debug("Listening for message via socket of length %s..." % str(size))
 
@@ -174,7 +174,7 @@ class ControllerSocket(object):
             raise ValueError("Packet size must be a multiple of 8; received \"%d\"." % size)
 
         if not self.isConnected():
-            raise SocketConnectionException("Socket not connected. Cannot send.")
+            raise SocketConnectionException("Socket not connected. Cannot receive.")
 
         received = bytearray()
         received_bytes = 0
@@ -187,7 +187,9 @@ class ControllerSocket(object):
             received.extend(chunk)
             received_bytes += len(chunk)
 
-            self.logger.debug(1, "%d bytes received in chunk..." % len(chunk))
+            self.logger.log(1, "%d bytes received in chunk..." % len(chunk))
+
+        self.logger.log(1, binascii.hexlify(received))
 
         return received
 

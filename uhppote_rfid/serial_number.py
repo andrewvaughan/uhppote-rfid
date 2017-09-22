@@ -178,7 +178,7 @@ class SerialNumber(object):
            :rtype: str
 
         .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getHexadecimalString([reverse = False])
+        .. SerialNumber:function:: getHexadecimalString([reverse])
         """
         if not reverse:
             return "{:08x}".format(self.getInteger())
@@ -201,7 +201,7 @@ class SerialNumber(object):
            :rtype: bytearray
 
         .. versionadded:: 0.1.0
-        .. SerialNumber:function:: getByteArray([reverse = False])
+        .. SerialNumber:function:: getByteArray([reverse])
         """
         return bytearray.fromhex(self.getHexadecimalString(reverse))
 
