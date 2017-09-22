@@ -1,10 +1,11 @@
 # -*- coding: utf-8 -*-
 """
-.. module:: ControllerSocket
-   :synopsis: Provides socket and communication support for UHPPOTE RFID control boards.
+Provides socket and communication support for UHPPOTE RFID control boards.
 
    :copyright: (c) 2017 by Andrew Vaughan.
    :license: Apache 2.0, see LICENSE for more details.
+
+.. module:: ControllerSocket
 """
 
 import logging
@@ -14,19 +15,15 @@ import socket
 
 class ControllerSocket(object):
     """
-    .. class:: ControllerSocket
-       Manages socket communication and transport for UHPPOTE RFID boards.
+    Manages socket communication and transport for UHPPOTE RFID boards.
 
+    .. class:: ControllerSocket
     .. versionadded:: 0.1.0
     """
 
-
     def __init__(self, host, port=60000):
         """
-        .. versionadded:: 0.1.0
-        .. function:: __init__(host, port)
-
-           Initializes a new Socket given an IP address and port for the control board.
+        Initialize a new Socket given an IP address and port for the control board.
 
            :param host: the hostname or IP address of the control board
            :type host: str
@@ -34,6 +31,9 @@ class ControllerSocket(object):
            :type port: int
 
            :raises ValueError: if provided an invalid host or port
+
+        .. versionadded:: 0.1.0
+        .. function:: __init__(host, port)
         """
         self.logger = logging.getLogger("UHPPOTE.ControllerSocket")
 
@@ -50,16 +50,16 @@ class ControllerSocket(object):
 
     def connect(self, attempts=3):
         """
-        .. versionadded:: 0.1.0
-        .. function:: connect()
-
-           Attempts to connect to the target as-configured.
+        Attempt to connect to the target as-configured.
 
            :param attempts: the number of times to retry connecting before throwing an exception (default: 3)
            :type attempts: int
 
            :raises ValueError: if attempts is below 1
            :raises SocketConnectionException: if unable to connect after the prescribed number of retries
+
+        .. versionadded:: 0.1.0
+        .. function:: connect()
         """
         self.logger.debug("Connecting to %s:%d via socket" % (self.host, self.port))
 
@@ -84,14 +84,13 @@ class ControllerSocket(object):
 
     def close(self):
         """
-        .. versionadded:: 0.1.0
-        .. function:: close()
-
-
-           Attempts to close the open connection.
+        Attempt to close the open connection.
 
            :returns: True if the socket was closed, or False if it remains open
            :rtype: bool
+
+        .. versionadded:: 0.1.0
+        .. function:: close()
         """
         self.logger.debug("Closing socket...")
         self.socket.close()
@@ -101,10 +100,7 @@ class ControllerSocket(object):
 
     def send(self, msg):
         """
-        .. versionadded:: 0.1.0
-        .. function:: send(msg)
-
-           Sends a message through a connected socket.
+        Send a message through a connected socket.
 
            :param msg: the message to send through the socket
            :type msg: str or bytearray or bytes
@@ -112,6 +108,9 @@ class ControllerSocket(object):
            :raises ValueError: if the message being sent is in an invalid format
            :raises SocketConnectionException: if the socket does not have a working connection
            :raises SocketTransmitException: if the socket connection is broken during transmission
+
+        .. versionadded:: 0.1.0
+        .. function:: send(msg)
         """
         if not isinstance(msg, (str, bytes, bytearray)):
             raise ValueError("Invalid message sent to socket.  Expected str, bytes, or bytearray; received %s." % type(msg))
@@ -142,11 +141,7 @@ class ControllerSocket(object):
 
     def receive(self, size=64):
         """
-        .. versionadded:: 0.1.0
-        .. function:: receive()
-
-           Receives a message through a connected socket.  Will block I/O until enough bytes to get `size` are
-           returned.
+        Receive a message through a connected socket.  Will block I/O until enough bytes to get `size` are returned.
 
            :param size: the size, in bytes, expected for the incoming message
            :type size: int
@@ -157,6 +152,9 @@ class ControllerSocket(object):
            :raises ValueError: if the size is not a positive multiple of 8
            :raises SocketConnectionException: if the socket does not have a working connection
            :raises SocketTransmitException: if the socket connection is broken during transmission
+
+        .. versionadded:: 0.1.0
+        .. function:: receive()
         """
         self.logger.debug("Listening for message via socket of length %s..." % str(size))
 
@@ -196,28 +194,28 @@ class ControllerSocket(object):
 
     def getHost(self):
         """
-        .. versionadded:: 0.1.0
-        .. function:: getHost()
-
-           Returns the hostname of the socket.
+        Return the hostname of the socket.
 
            :returns: the hosthame of the socket
            :rtype: str
+
+        .. versionadded:: 0.1.0
+        .. function:: getHost()
         """
         return self.host
 
 
     def setHost(self, host):
         """
-        .. versionadded: 0.1.0
-        .. function:: setHost(host)
-
-           Sets the hostname for the socket.
+        Set the hostname for the socket.
 
            :param host: the hostname for the socket
            :type host: str or bytearray
 
            :raises ValueError: if provided an invalid host
+
+        .. versionadded: 0.1.0
+        .. function:: setHost(host)
         """
         if not isinstance(host, (str, bytearray)):
             raise ValueError("Invalid host provided. Expected string or bytearray; received %s." % type(host))
@@ -244,28 +242,28 @@ class ControllerSocket(object):
 
     def getPort(self):
         """
-        .. versionadded:: 0.1.0
-        .. function:: getPort()
-
-           Returns the port for the socket.
+        Return the port for the socket.
 
            :returns: the port for the socket
            :rtype: int
+
+        .. versionadded:: 0.1.0
+        .. function:: getPort()
         """
         return self.port
 
 
     def setPort(self, port):
         """
-        .. versionadded:: 0.1.0
-        .. function:: setPort(port)
-
-           Sets the port for the socket.
+        Set the port for the socket.
 
            :param port: the port for the socket
            :type port: int
 
            :raises ValueError: if provided an invalid port
+
+        .. versionadded:: 0.1.0
+        .. function:: setPort(port)
         """
         if isinstance(port, str):
             if not port.isdigit():
@@ -285,13 +283,13 @@ class ControllerSocket(object):
 
     def isConnected(self):
         """
-        .. versionadded: 0.1.0
-        .. function:: isConnected()
-
-           Returns whether the socket is currently connected to a server.
+        Return whether the socket is currently connected to a server.
 
            :returns: whether the socket is currently connected to a server
            :rtype: bool
+
+        .. versionadded: 0.1.0
+        .. function:: isConnected()
         """
         return self.connected
 
@@ -304,6 +302,7 @@ class SocketConnectionException(Exception):
 
     .. versionadded:: 0.1.0
     """
+
     pass
 
 
@@ -313,4 +312,5 @@ class SocketTransmitException(Exception):
 
     .. versionadded:: 0.1.0
     """
+
     pass

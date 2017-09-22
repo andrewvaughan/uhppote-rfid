@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 """
-RFID
+Control module for UHPPOTE RFID access-control boards.
+
 https://github.com/andrewvaughan/uhppote-rfid
 
 Copyright 2017 Andrew Vaughan
@@ -27,51 +28,133 @@ import subprocess
 from setuptools import setup
 
 
-class LintCommand(distutils.cmd.Command):
+VERSION = '0.1.0'
+
+
+class LintDocstringCommand(distutils.cmd.Command):
     """
-    A custom command to run linting on all Python source files.
+    A custom command to run docstring linting on all Python source files.
+
+    .. versionadded:: 0.1.0
     """
 
-    description = 'run linting on Python source files'
+    description = 'run docstring linting on all Python source files'
     user_options = [
-        ('verbose', None, 'show PEP8 and source code upon failure (default: off)'),
-        ('quiet', None, 'return only error count and an error code (default: off)')
+        ('explain', 'e', 'show PEP257 and source code upon failure (default: off)'),
+        ('debug', 'd', 'show extra debug information (default: off)'),
+        ('quiet', 'q', 'return only error count and an error code (default: off)')
     ]
 
     def initialize_options(self):
         """
-        Sets up defaults for the command options.
-        """
+        Set up defaults for the command options.
 
-        self.verbose = False
+        .. versionadded:: 0.1.0
+        .. function:: initialize_options()
+        """
+        self.explain = False
+        self.debug = False
         self.quiet = False
+
 
     def finalize_options(self):
         """
-        Parses command options prior to running.
+        Parse command options prior to running.
+
+        .. versionadded:: 0.1.0
+        .. function:: finalize_options()
         """
         pass
 
 
     def run(self):
         """
-        Run the command.
+        Execute the LintDocstring command.
+
+        .. versionadded:: 0.1.0
+        .. function:: run()
         """
-
-        command = ['/usr/bin/env', 'pycodestyle']
-
-        if self.verbose:
-            command.append('--show-pep8')
-            command.append('--show-source')
+        command = ['/usr/bin/env', 'pydocstyle']
 
         if self.quiet:
             command.append('--count')
+
+        elif self.explain:
+            command.append('--explain')
+            command.append('--source')
+
+        if self.debug:
+            command.append('--debug')
+            command.append('--verbose')
 
         command.append("%s/" % os.getcwd())
 
         self.announce(
             'Running command: %s' % str(command),
-            level=distutils.log.INFO
+            level=distutils.log.DEBUG
+        )
+
+        subprocess.check_call(command)
+
+
+
+
+class LintCommand(distutils.cmd.Command):
+    """
+    A custom command to run linting on all Python source files.
+
+    .. versionadded:: 0.1.0
+    """
+
+    description = 'run code linting on source files'
+    user_options = [
+        ('explain', 'e', 'show PEP8 and source code upon failure (default: off)'),
+        ('quiet', 'q', 'return only error count and an error code; prevents verbosity (default: off)')
+    ]
+
+
+    def initialize_options(self):
+        """
+        Set up defaults for the command options.
+
+        .. versionadded:: 0.1.0
+        .. function:: initialize_options()
+        """
+        self.explain = False
+        self.quiet = False
+
+
+    def finalize_options(self):
+        """
+        Parse command options prior to running.
+
+        .. versionadded:: 0.1.0
+        .. function:: finalize_options()
+        """
+        pass
+
+
+    def run(self):
+        """
+        Execute the Lint command.
+
+        .. versionadded:: 0.1.0
+        .. function:: run()
+        """
+        command = ['/usr/bin/env', 'pycodestyle']
+
+        if self.quiet:
+            command.append('--count')
+
+        elif self.explain:
+            command.append('--show-pep8')
+            command.append('--show-source')
+
+        command.append("%s/" % os.getcwd())
+
+        self.announce(
+            'Running command: %s' % str(command),
+            level=distutils.log.DEBUG
         )
 
         subprocess.check_call(command)
@@ -79,9 +162,11 @@ class LintCommand(distutils.cmd.Command):
 
 def readme():
     """
-    Attempts to convert the README file to rst format and return it.
-    """
+    Attempt to convert the README file to .rst format and return it.
 
+    .. versionadded:: 0.1.0
+    .. function:: readme()
+    """
     # try:
     #     import pypandoc
     #     return pypandoc.convert('README.md', 'rst').decode('utf-8')
@@ -93,7 +178,7 @@ def readme():
 
 setup(
     name='UHPPOTE_RFID',
-    version='0.1.0',
+    version=VERSION,
     description='Interface for UHPPOTE RFID control systems.',
     long_description=readme(),
     classifiers=[
@@ -114,7 +199,7 @@ setup(
         'Topic :: System :: Systems Administration :: Authentication/Directory',
         'Topic :: Utilities',
     ],
-    keywords='rfid access security',
+    keywords='rfid access security for UHPPOTE RFID control boards',
     url='http://github.com/andrewvaughan/uhppote-rfid',
     author='Andrew Vaughan',
     author_email='hello@andrewvaughan.io',
@@ -122,6 +207,7 @@ setup(
     packages=['uhppote_rfid'],
     install_requires=[],
     cmdclass={
-        'lint': LintCommand
+        'lint': LintCommand,
+        'lint_docstring': LintDocstringCommand,
     }
 )
