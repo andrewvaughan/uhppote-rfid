@@ -1,13 +1,16 @@
 dependencies:
 	pip install -r requirements.txt
 
-lint: dependencies
+lint-docstring: dependencies
+	python setup.py lint_docstring
+
+lint: dependencies lint-docstring
 	python setup.py lint
 
-test: clean-pyc lint
+test: clean-pyc dependencies lint
 	python -m unittest discover
 
-coverage: clean-pyc lint
+coverage: clean-pyc dependencies lint
 	coverage run --source uhppote_rfid test
 	coverage html
 

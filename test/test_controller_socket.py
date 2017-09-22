@@ -15,7 +15,6 @@ class TestControllerSocket(unittest.TestCase):
     Tests UHPPOTE socket transmission by emulating the control board's server.
     """
 
-
     def setUp(self):
         """
         .. function:: setUp()
